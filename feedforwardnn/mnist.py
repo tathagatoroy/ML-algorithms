@@ -41,6 +41,7 @@ def load_data():
     return (training_data, validation_data, test_data)
 
 def load_data_wrapper():
+    print("data loader called")
     """Return a tuple containing ``(training_data, validation_data,
     test_data)``. Based on ``load_data``, but the format is more
     convenient for use in our implementation of neural networks.
@@ -59,6 +60,11 @@ def load_data_wrapper():
     turn out to be the most convenient for use in our neural network
     code."""
     tr_d, va_d, te_d = load_data()
+
+    training_size = len(tr_d[0])
+    validation_size = len(va_d[0])
+    test_size = len(te_d[0])
+
     training_inputs = [np.reshape(x, (784, 1)) for x in tr_d[0]]
     training_results = [vectorized_result(y) for y in tr_d[1]]
     training_data = zip(training_inputs, training_results)
@@ -66,7 +72,9 @@ def load_data_wrapper():
     validation_data = zip(validation_inputs, va_d[1])
     test_inputs = [np.reshape(x, (784, 1)) for x in te_d[0]]
     test_data = zip(test_inputs, te_d[1])
-    return (training_data, validation_data, test_data)
+    #print(list(test_data))
+    print("data loading done i think")
+    return (training_data, validation_data, test_data,training_size, validation_size, test_size)
 
 def vectorized_result(j):
     """Return a 10-dimensional unit vector with a 1.0 in the jth

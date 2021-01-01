@@ -10,14 +10,15 @@ class neuralnet():
         self.dim = dim  
          #elements in the weight matrix is initialised from a normal distribution ~ N(0,1)
         self.weight = [np.random.normal(0,1,[y , x]) for x,y in zip(dim[:-1],dim[1:])]
-        print("size of weight : {}".format(len(self.weight)))
+        #print("size of weight : {}".format(len(self.weight)))
         self.bias = [np.random.normal(0,1,[y , 1]) for y in dim[1:]] 
-        print("size of bias : {}".format(len(self.bias)))
+        #print("size of bias : {}".format(len(self.bias)))
         
     
     #sigmoid function
     def sigmoid(self,z):
         return 1.0/(1.0+np.exp(-z))
+     #dervivative of sigmoid given by e^(-z)/(1+e^(-z))^2  
     def del_sigmoid(self,z):
         return ((np.exp(-z))/((1.0+np.exp(-z))*(1.0+np.exp(-z))))
 
@@ -66,7 +67,7 @@ class neuralnet():
 
     #return the total number of test data it is correct and total number of test data
     def evaluate(self,test_data):
-        test_result = [(np.argmax(self.predict(x)),y) for (x,y) in test_date] #finds the indices with max value in predict(x)
+        test_result = [(np.argmax(self.predict(x)),y) for (x,y) in test_data] #finds the indices with max value in predict(x)
         return  sum(int(x == y) for (x,y) in test_result)   #counts where result is correct
 
 
@@ -99,7 +100,7 @@ class neuralnet():
             diff = (output - y)*(output - y)
             cost1 = np.sum(diff)
             cost += cost1
-        cost = cost/len(data)
+        cost = cost/len(list(data))
         return cost
 
 
